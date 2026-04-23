@@ -62,6 +62,8 @@ export class PaymentSDK {
 export { VNPayGateway } from './gateways/vnpay.js'
 export { MoMoGateway } from './gateways/momo.js'
 export { ZaloPayGateway } from './gateways/zalopay.js'
+export { VietQRGateway } from './gateways/vietqr.js'
+export { StripeGateway } from './gateways/stripe.js'
 export { PaymentSDKError } from './errors.js'
 
 export type {
@@ -80,6 +82,8 @@ export type {
 export type { VNPayConfig } from './gateways/vnpay.js'
 export type { MoMoConfig } from './gateways/momo.js'
 export type { ZaloPayConfig } from './gateways/zalopay.js'
+export type { VietQRConfig } from './gateways/vietqr.js'
+export type { StripeConfig } from './gateways/stripe.js'
 
 export {
   PaymentStatus,

@@ -128,6 +128,51 @@ This ensures callers can write gateway-agnostic error handling.
 | `-49`       | `TRANSACTION_NOT_FOUND`     | Transaction not found (query)                 |
 | `-58`       | `CARD_DECLINED`             | Bank declined the payment                     |
 
+### VietQR Response Codes → ErrorCode
+
+| code   | ErrorCode                   | Description                                      |
+|--------|-----------------------------|--------------------------------------------------|
+| `00`   | *(success)*                 | Success                                          |
+| `E01`–`E09` | `AUTHENTICATION_FAILED` | Authentication / account issues               |
+| `E24`  | `INVALID_INPUT`             | Bank code not found                              |
+| `E39`  | `INVALID_SIGNATURE`         | Invalid checkSum                                 |
+| `E42`–`E46` | `REFUND_FAILED`        | Refund authorization failure                     |
+| `E74`  | `AUTHENTICATION_FAILED`     | Token invalid or expired                         |
+| `E75`  | `GATEWAY_ERROR`             | Service unavailable                              |
+| `E76`  | `INVALID_CONFIG`            | Merchant account not found / not registered      |
+| `E157` | `REFUND_ALREADY_PROCESSED`  | Transaction already refunded (single refund only)|
+
+### Stripe Error Codes → ErrorCode
+
+Stripe errors carry either a `decline_code` (for card declines) or a general `code`+`type`.
+`decline_code` takes precedence over `code`.
+
+| decline_code / code            | ErrorCode                  | Description                                  |
+|--------------------------------|----------------------------|----------------------------------------------|
+| *(success)*                    | *(success)*                | Checkout Session created / PaymentIntent OK  |
+| `insufficient_funds`           | `INSUFFICIENT_FUNDS`       | Card has insufficient funds                  |
+| `card_declined` / `generic_decline` / `do_not_honor` | `CARD_DECLINED` | Bank declined without specific reason |
+| `lost_card` / `stolen_card` / `pickup_card` / `restricted_card` / `pin_try_exceeded` | `CARD_LOCKED` | Card is locked or flagged |
+| `expired_card` / `call_issuer` / `card_not_supported` | `CARD_DECLINED` | Card unusable |
+| `incorrect_cvc` / `invalid_cvc` / `authentication_required` / `offline_pin_required` | `AUTHENTICATION_FAILED` | Auth/CVC failure |
+| `incorrect_number` / `invalid_number` / `invalid_expiry_month` / `invalid_expiry_year` / `incorrect_zip` | `INVALID_INPUT` | Bad card data |
+| `currency_not_supported`       | `INVALID_INPUT`            | Currency not allowed for this card           |
+| `invalid_amount`               | `INVALID_AMOUNT`           | Amount outside allowed range                 |
+| `duplicate_transaction`        | `DUPLICATE_ORDER`          | Duplicate payment detected                   |
+| `issuer_not_available`         | `BANK_MAINTENANCE`         | Issuing bank is unreachable                  |
+| `processing_error`             | `GATEWAY_ERROR`            | Stripe-side processing error                 |
+| `card_velocity_exceeded` / `fraudulent` / `not_permitted` | `PAYMENT_FAILED` | Policy or fraud block |
+| `charge_already_refunded`      | `REFUND_ALREADY_PROCESSED` | Transaction already fully refunded           |
+| `charge_exceeds_source_amount` / `amount_too_large` | `REFUND_AMOUNT_EXCEEDED` | Refund exceeds original charge |
+| `refund_not_supported`         | `REFUND_NOT_SUPPORTED`     | Refunds not allowed for this payment         |
+| `missing_charge`               | `TRANSACTION_NOT_FOUND`    | Referenced charge/intent not found           |
+| `resource_missing` (GET)       | `TRANSACTION_NOT_FOUND`    | Requested resource does not exist            |
+| type=`authentication_error`    | `AUTHENTICATION_FAILED`    | Invalid API key or insufficient permissions  |
+| type=`api_error`               | `GATEWAY_ERROR`            | Stripe internal server error (retried)       |
+| type=`rate_limit_error`        | `GATEWAY_ERROR`            | Too many requests (retried)                  |
+| type=`idempotency_error`       | `DUPLICATE_ORDER`          | Conflicting idempotency key reuse            |
+| type=`invalid_request_error` / `validation_error` | `INVALID_INPUT` | Malformed request parameters  |
+
 ---
 
 ## Error Handling Principles
