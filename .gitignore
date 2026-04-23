@@ -9,6 +9,5 @@ coverage/
 vendor/
 CLAUDE.md
 .claude/
-specs/
 packages/node/node_modules/
 packages/node/package-lock.json
