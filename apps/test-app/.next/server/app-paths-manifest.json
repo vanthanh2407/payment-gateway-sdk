@@ -1,7 +1,0 @@
-{
-  "/status/page": "app/status/page.js",
-  "/api/webhooks/route": "app/api/webhooks/route.js",
-  "/page": "app/page.js",
-  "/webhooks/page": "app/webhooks/page.js",
-  "/api/gateways/route": "app/api/gateways/route.js"
-}
