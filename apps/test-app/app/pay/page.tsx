@@ -203,17 +203,37 @@ function PayForm() {
           {result.paymentUrl ? (
             <>
               <p className="font-medium text-green-800 mb-3">Tạo thành công!</p>
-              <a
-                href={result.paymentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors mb-3"
-              >
-                Mở cổng thanh toán →
-              </a>
-              <div className="text-xs font-mono bg-white/60 rounded p-2 break-all text-gray-700 border border-green-200">
-                {result.paymentUrl}
-              </div>
+              {result.paymentUrl.startsWith('data:image') ? (
+                <>
+                  <p className="text-sm text-green-700 mb-3">Quét mã QR để thanh toán</p>
+                  <img
+                    src={result.paymentUrl}
+                    alt="VietQR QR Code"
+                    className="w-48 h-48 border border-green-200 rounded-lg mb-3"
+                  />
+                  <a
+                    href={result.paymentUrl}
+                    download="vietqr.png"
+                    className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors"
+                  >
+                    Tải QR →
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href={result.paymentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors mb-3"
+                  >
+                    Mở cổng thanh toán →
+                  </a>
+                  <div className="text-xs font-mono bg-white/60 rounded p-2 break-all text-gray-700 border border-green-200">
+                    {result.paymentUrl}
+                  </div>
+                </>
+              )}
             </>
           ) : (
             <p className="text-red-800 font-medium">{result.error}</p>

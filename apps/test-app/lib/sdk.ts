@@ -4,6 +4,7 @@ import {
   MoMoGateway,
   ZaloPayGateway,
   StripeGateway,
+  VietQRGateway,
 } from '@payment-sdk/node'
 
 const sdk = new PaymentSDK()
@@ -57,6 +58,26 @@ if (process.env.STRIPE_SECRET_KEY && process.env.STRIPE_WEBHOOK_SECRET) {
     new StripeGateway({
       secretKey: process.env.STRIPE_SECRET_KEY,
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    })
+  )
+}
+
+if (
+  process.env.VIETQR_CLIENT_ID &&
+  process.env.VIETQR_API_KEY &&
+  process.env.VIETQR_BANK_CODE &&
+  process.env.VIETQR_BANK_ACCOUNT &&
+  process.env.VIETQR_ACCOUNT_NAME
+) {
+  sdk.use(
+    'vietqr',
+    new VietQRGateway({
+      clientId: process.env.VIETQR_CLIENT_ID,
+      apiKey: process.env.VIETQR_API_KEY,
+      bankCode: process.env.VIETQR_BANK_CODE,
+      bankAccount: process.env.VIETQR_BANK_ACCOUNT,
+      accountName: process.env.VIETQR_ACCOUNT_NAME,
+      sandbox: true,
     })
   )
 }

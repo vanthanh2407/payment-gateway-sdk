@@ -16,6 +16,7 @@ const GATEWAY_ICONS: Record<string, string> = {
   momo: '💜',
   zalopay: '🔵',
   stripe: '⚡',
+  vietqr: '🏧',
 }
 
 const GATEWAY_COLORS: Record<string, string> = {
@@ -23,6 +24,7 @@ const GATEWAY_COLORS: Record<string, string> = {
   momo: 'border-purple-200 bg-purple-50',
   zalopay: 'border-blue-200 bg-blue-50',
   stripe: 'border-indigo-200 bg-indigo-50',
+  vietqr: 'border-green-200 bg-green-50',
 }
 
 export default function DashboardPage() {
@@ -97,7 +99,7 @@ export default function DashboardPage() {
           <code className="bg-amber-100 px-1 rounded font-mono">.env.local</code>
         </p>
         <div className="space-y-1">
-          {['vnpay', 'momo', 'zalopay', 'stripe'].map((gw) => (
+          {['vnpay', 'momo', 'zalopay', 'stripe', 'vietqr'].map((gw) => (
             <div key={gw} className="flex items-center gap-2 font-mono text-xs text-amber-900">
               <span className="font-medium w-16">{gw}:</span>
               <code className="bg-white/60 px-2 py-0.5 rounded border border-amber-200">

@@ -8,6 +8,7 @@ export async function GET() {
     { id: 'momo', name: 'MoMo', currency: 'VND', methods: ['wallet', 'card', 'qr'] },
     { id: 'zalopay', name: 'ZaloPay', currency: 'VND', methods: ['wallet', 'card', 'qr'] },
     { id: 'stripe', name: 'Stripe', currency: 'USD', methods: ['card', 'bank_transfer'] },
+    { id: 'vietqr', name: 'VietQR', currency: 'VND', methods: ['banking', 'qr'] },
   ]
   return NextResponse.json(
     all.map((g) => ({ ...g, configured: configured.includes(g.id) }))
