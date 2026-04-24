@@ -51,6 +51,11 @@ final class Crypto
         return $date->format('YmdHis');
     }
 
+    public static function md5(string $data): string
+    {
+        return md5($data);
+    }
+
     public static function timingSafeEqual(string $a, string $b): bool
     {
         return hash_equals($a, $b);
