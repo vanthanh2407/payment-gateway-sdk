@@ -11,6 +11,11 @@ final class Crypto
         return hash_hmac('sha256', $data, $key);
     }
 
+    public static function hmacSHA512(string $data, string $key): string
+    {
+        return hash_hmac('sha512', $data, $key);
+    }
+
     /**
      * @param array<string, string> $params
      * @param string[] $keys Keys in the required signing order
@@ -22,6 +27,28 @@ final class Crypto
             $parts[] = "{$key}={$params[$key]}";
         }
         return implode('&', $parts);
+    }
+
+    /**
+     * Build a sorted query string for signing — keys sorted alphabetically,
+     * values RFC 3986-encoded (matches JS encodeURIComponent).
+     *
+     * @param array<string, string> $params
+     */
+    public static function buildSortedQueryString(array $params): string
+    {
+        ksort($params);
+        $parts = [];
+        foreach ($params as $key => $value) {
+            $parts[] = $key . '=' . rawurlencode($value);
+        }
+        return implode('&', $parts);
+    }
+
+    /** Format a DateTimeInterface as VNPay's yyyyMMddHHmmss in local timezone */
+    public static function formatVNPayDate(\DateTimeInterface $date): string
+    {
+        return $date->format('YmdHis');
     }
 
     public static function timingSafeEqual(string $a, string $b): bool

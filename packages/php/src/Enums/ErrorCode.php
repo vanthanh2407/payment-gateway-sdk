@@ -18,6 +18,8 @@ enum ErrorCode: string
     case PAYMENT_EXPIRED           = 'PAYMENT_EXPIRED';
     case INSUFFICIENT_FUNDS        = 'INSUFFICIENT_FUNDS';
     case CARD_DECLINED             = 'CARD_DECLINED';
+    case CARD_LOCKED               = 'CARD_LOCKED';
+    case BANK_MAINTENANCE          = 'BANK_MAINTENANCE';
     case DUPLICATE_ORDER           = 'DUPLICATE_ORDER';
     case TRANSACTION_NOT_FOUND     = 'TRANSACTION_NOT_FOUND';
     case REFUND_FAILED             = 'REFUND_FAILED';

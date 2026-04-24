@@ -37,7 +37,7 @@ final class Http
                 }
                 return self::curlPost($url, $body, $timeoutMs, $extraHeaders);
             } catch (PaymentSDKException $e) {
-                if ($e->code !== ErrorCode::NETWORK_ERROR && $e->code !== ErrorCode::TIMEOUT) {
+                if ($e->errorCode !== ErrorCode::NETWORK_ERROR && $e->errorCode !== ErrorCode::TIMEOUT) {
                     throw $e;
                 }
                 $lastException = $e;

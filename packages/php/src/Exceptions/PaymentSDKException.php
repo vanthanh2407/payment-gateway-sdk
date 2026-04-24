@@ -10,19 +10,19 @@ use RuntimeException;
 class PaymentSDKException extends RuntimeException
 {
     public function __construct(
-        public readonly ErrorCode $code,
+        public readonly ErrorCode $errorCode,
         string $message = '',
         public readonly ?string $gatewayCode = null,
         public readonly ?string $gatewayMessage = null,
         public readonly mixed $details = null,
         ?\Throwable $previous = null,
     ) {
-        parent::__construct($message !== '' ? $message : $code->value, previous: $previous);
+        parent::__construct($message !== '' ? $message : $errorCode->value, previous: $previous);
     }
 
     public static function invalidConfig(string $message): self
     {
-        return new self(ErrorCode::INVALID_CONFIG, $message);
+        return new self(errorCode: ErrorCode::INVALID_CONFIG, message: $message);
     }
 
     public static function invalidInput(string $message, mixed $details = null): self
